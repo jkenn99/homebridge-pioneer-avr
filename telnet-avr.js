@@ -7,10 +7,11 @@ const PORT = 23;
 const HOST = '127.0.0.1';
  
 class TelnetAvr {
- constructor(host, port) {
+ constructor(host, port, log) {
   this.host = host || HOST;
   this.port = port || PORT;
   this.lock = new ReadWriteLock();
+  this.log = log;
  }
  
  sendMessage(message) {
@@ -19,6 +20,7 @@ class TelnetAvr {
   return new Promise((resolve, reject) => {
    me.lock.writeLock(function (release) {
     var socket = net.createConnection(me.port, me.host, () => {
+     me.log.debug('Connect to AVR ' + me.host);
      if (!socket.writable)
       return reject(new Error('Cannot write to AVR socket ' + me.host));
      socket.write(message+'\r');
@@ -51,6 +53,7 @@ class TelnetAvr {
     });
     
     socket.on('data', (d) => {
+     me.log.debug('Receive data from AVR ' + me.host);
      let data = d
       .toString()
       .replace('\n', '')
