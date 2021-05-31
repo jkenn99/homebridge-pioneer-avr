@@ -15,6 +15,7 @@ class TelnetAvr {
  
  sendMessage(message) {
   var me = this;
+  var messageTimeout;
   return new Promise((resolve, reject) => {
    me.lock.writeLock(function (release) {
     var socket = net.Socket();
@@ -34,7 +35,7 @@ class TelnetAvr {
       socket.end();
       return;
      }
-     var messageTimeout = setTimeout(() => {
+     messageTimeout = setTimeout(() => {
       socket.destroy();
       reject(new Error('Response not received from AVR ' + me.host));
      }, 2000)
