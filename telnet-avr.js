@@ -20,7 +20,6 @@ class TelnetAvr {
   return new Promise((resolve, reject) => {
    me.lock.writeLock(function (release) {
     var socket = net.createConnection(me.port, me.host, () => {
-     me.log.debug('Connect to AVR ' + me.host);
      if (!socket.writable)
       return reject(new Error('Cannot write to AVR socket ' + me.host));
      socket.write(message+'\r');
@@ -53,7 +52,6 @@ class TelnetAvr {
     });
     
     socket.on('data', (d) => {
-     me.log.debug('Receive data from AVR ' + me.host + ': ' + d.toString());
      let data = d
       .toString()
       .replace('\n', '')
