@@ -91,7 +91,7 @@ PioneerAvr.prototype.loadInputs = function(callback) {
         this.log.debug('Trying Input key: %s', key);
         promises.push(this.sendCommand(`?RGB${key}`, callback));
     }
-    Promises.all(promises).then(result => {
+    Promise.all(promises).then(result => {
         this.log.debug('Done input discovery');
     });
 };
