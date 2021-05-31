@@ -19,18 +19,25 @@ class TelnetAvr {
    me.lock.writeLock(function (release) {
     var socket = net.Socket();
     socket.setTimeout(2000, () => {
-     socket.destroy()
-     reject(new Error('Cannot connect to AVR ' + me.host))
+     socket.destroy();
+     reject(new Error('Cannot connect to AVR ' + me.host));
     });
     socket.once('connect', () => socket.setTimeout(0));
     socket.connect(me.port, me.host, () => {
+     if (!this.socket.writable)
+      return reject(new Error('Cannot write to AVR socket ' + me.host));
      socket.write(message+'\r');
      require('deasync').sleep(100);
      socket.write(message+'\r');
      if (!message.startsWith('?')) {
       resolve(message + ':SENT');
       socket.end();
+      return;
      }
+     var messageTimeout = setTimeout(() => {
+      socket.destroy();
+      reject(new Error('Response not received from AVR ' + me.host));
+     }, 2000)
     });
 
     socket.on('close', () => {
@@ -39,6 +46,7 @@ class TelnetAvr {
     });
  
     socket.on('data', (d) => {
+     clearTimeout(messageTimeout);
      let data = d
       .toString()
       .replace('\n', '')
