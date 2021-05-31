@@ -83,7 +83,7 @@ function PioneerAvr(log, host, port) {
 }
 module.exports = PioneerAvr;
 
-PioneerAvr.prototype.loadInputs = function(callback) {
+PioneerAvr.prototype.loadInputs = async function(callback) {
     // Queue and send all inputs discovery commands
     this.log.debug('Discovering inputs');
     var promises = [];
@@ -91,9 +91,7 @@ PioneerAvr.prototype.loadInputs = function(callback) {
         this.log.debug('Trying Input key: %s', key);
         promises.push(this.sendCommand(`?RGB${key}`, callback));
     }
-    Promise.all(promises).then(result => {
-        this.log.debug('Done input discovery');
-    });
+    await Promise.all(promises)
 };
 
 // Power methods
