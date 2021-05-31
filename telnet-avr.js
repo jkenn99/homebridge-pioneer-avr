@@ -60,6 +60,7 @@ class TelnetAvr {
       .replace('\r', '');
      resolve(data);
      socket.end();
+     me.log.debug('Message complete: sent ' + message + '; received ' + data);
     });
  
     socket.on('error', (err) => {
