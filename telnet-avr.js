@@ -46,7 +46,8 @@ class TelnetAvr {
     });
  
     socket.on('data', (d) => {
-     clearTimeout(messageTimeout);
+     if (messageTimeout)
+      clearTimeout(messageTimeout);
      let data = d
       .toString()
       .replace('\n', '')
