@@ -23,7 +23,6 @@
   "dependencies": {
     "net": "",
     "fs": "",
-    "deasync": "",
     "mkdirp": "",
     "persist-path": "",
     "rwlock": "",
