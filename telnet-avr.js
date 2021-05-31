@@ -53,7 +53,7 @@ class TelnetAvr {
     });
     
     socket.on('data', (d) => {
-     me.log.debug('Receive data from AVR ' + me.host);
+     me.log.debug('Receive data from AVR ' + me.host + ': ' + d.toString());
      let data = d
       .toString()
       .replace('\n', '')
