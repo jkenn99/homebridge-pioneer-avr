@@ -254,7 +254,7 @@ PioneerAvr.prototype.remoteKey = function (rk) {
 PioneerAvr.prototype.sendCommand = async function(command, callback) {
     // Main method to send a command to AVR
     try {
-        this.log.debug('Send command : %s', command);
+        this.log.debug('Send command : %s -> %s:%d', command, this.host, this.port);
         data = await this.s.sendMessage(command);
         this.log.debug('Receive data : %s', data);
     } catch (e) {
