@@ -75,7 +75,7 @@ function PioneerAvr(log, host, port) {
         });
 
     // Communication Initialization
-    this.s = new TelnetAvr(this.host, this.port);
+    this.s = new TelnetAvr(this.host, this.port, this.log);
 
     // Dealing with input's initialization
     this.initCount = 0;
