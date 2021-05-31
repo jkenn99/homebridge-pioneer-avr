@@ -24,7 +24,7 @@ class TelnetAvr {
     });
     socket.once('connect', () => socket.setTimeout(0));
     socket.connect(me.port, me.host, () => {
-     if (!this.socket.writable)
+     if (!socket.writable)
       return reject(new Error('Cannot write to AVR socket ' + me.host));
      socket.write(message+'\r');
      require('deasync').sleep(100);
