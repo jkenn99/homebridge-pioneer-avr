@@ -18,7 +18,10 @@ class TelnetAvr {
   return new Promise((resolve, reject) => {
    me.lock.writeLock(function (release) {
     var socket = net.Socket();
-    socket.setTimeout(2000, () => socket.destroy());
+    socket.setTimeout(2000, () => {
+     socket.destroy()
+     reject(new Error('Cannot connect to AVR ' + me.host))
+    });
     socket.once('connect', () => socket.setTimeout(0));
     socket.connect(me.port, me.host, () => {
      socket.write(message+'\r');
