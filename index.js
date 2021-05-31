@@ -314,7 +314,6 @@ pioneerAvrAccessory.prototype.getServices = function() {
     // This method is called once on startup. We need to wait for accessory to be ready
     // ie all inputs are created
     while (this.avr.isReady == false) {
-        require('deasync').sleep(500);
         this.log.debug('Waiting for pioneerAvrAccessory to be ready');
     }
 
