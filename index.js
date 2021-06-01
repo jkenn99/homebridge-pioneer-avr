@@ -125,7 +125,8 @@ pioneerAvrAccessory.prototype.prepareTvSpeakerService = function () {
 pioneerAvrAccessory.prototype.prepareInputSourceService = function () {
     // Run avr.loadInputs with addInputSourceService callback to create each input service
     this.log.info('Discovering inputs');
-    this.avr.loadInputs(this.addInputSourceService.bind(this));
+    var loadInputs = deasync(this.avr.loadInputs);
+    loadInputs(this.addInputSourceService.bind(this));
 };
 
 pioneerAvrAccessory.prototype.addInputSourceService = function(key) {
